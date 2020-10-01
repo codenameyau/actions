@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# This script merges staging into unreleased canary branches.
+# You will need git v2.13 to run this script.
+
+# Exit script if you try to use an uninitialized variable.
+set -o nounset
+
+# Exit script if a statement returns a non-true return value.
+set -o errexit
+
+# Use the error status of the first failure rather than last item in a pipe.
+set -o pipefail
+
+if ! git diff --exit-code &>/dev/null ; then
+  echo "Please run this script on a clean branch."
+  exit 1
+fi
+
+# Pull latest changes from staging.
+git checkout staging
+git pull
+
+# Returns new exp branches that are not up-to-date with staging.
+exp_branches_outdated=$(git branch -r --no-contains remotes/origin/staging --contains remotes/origin/master -- *exp/* | sed s~origin/~~)
+
+for branch in $exp_branches_outdated; do
+  echo "Merging staging into: $branch"
+  git checkout "$branch"
+  git merge origin staging --no-edit
+  git push origin "$branch"
+done;

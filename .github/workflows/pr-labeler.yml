@@ -1,0 +1,26 @@
+# This workflow will label pull requests automatically.
+#
+# Actions used in this workflow:
+# https://github.com/actions/labeler
+# https://github.com/TimonVS/pr-labeler-action
+#
+
+name: PR Labeler
+on: [pull_request]
+
+jobs:
+  label-by-files-changed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+
+  label-by-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: TimonVS/pr-labeler-action@v3
+        with:
+          configuration-path: .github/label-by-branch-name.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

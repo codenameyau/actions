@@ -1,0 +1,26 @@
+# This workflow will back-merge master -> staging -> edge after merging
+# a pull request to master.
+#
+# Actions used in this workflow:
+# https://github.com/actions/checkout
+#
+
+name: Back-merge after merging PR to master
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  post-deploy-on-master:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: Run post-deploy script
+        run: ./bin/post-deploy patch

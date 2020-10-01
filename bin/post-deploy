@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# - Increment major version on breaking changes.
+# - Increment minor version on scheduled releases.
+# - Increment patch version on hotfixes to master.
+#
+# Examples:
+# ./post-deploy patch
+# ./post-deploy minor
+# ./post-deploy major
+
+update_branch() {
+  git checkout "$1" && git pull origin "$1"
+}
+
+release_type="${1:-patch}"
+
+if ! [[ $release_type =~ ^('patch'|'minor'|'major')$ ]]; then
+  echo 'Available Usage:
+  ./post-deploy patch
+  ./post-deploy minor
+  ./post-deploy major'
+  exit 1
+fi
+
+# Ensure that your branch is clean.
+if ! git diff --exit-code &>/dev/null ; then
+  echo "Please run this script on a clean branch."
+  exit 1
+fi
+
+# Ensure your local repository is clean and up-to-date.
+update_branch master
+update_branch edge
+update_branch staging
+
+# Bump the release version.
+yarn version --new-version "$release_type"
+
+# Merge master into staging for hotfixes.
+git checkout staging
+git merge origin master --no-edit
+git push origin staging
+
+# Merge staging into edge for warmfixes / hotfixes.
+git checkout edge
+git merge origin staging --no-edit
+git push origin edge
+git push --tags

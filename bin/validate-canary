@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Exit script if a statement returns a non-true return value.
+set -o errexit
+
+# Use the error status of the first failure rather than last item in a pipe.
+set -o pipefail
+
+exp_branches_with_master=$(git branch -r --contains remotes/origin/master -- *exp/* | sort)
+exp_branches_with_staging=$(git branch -r --contains remotes/origin/staging -- *exp/* | sort)
+exp_branches_to_update=$(comm -23 <(echo "$exp_branches_with_master") <(echo "$exp_branches_with_staging"))
+
+if [[ "$exp_branches_with_master" != "$exp_branches_with_staging" ]]; then
+  echo -e "Please merge staging into these branches:"
+  echo -e "$exp_branches_to_update"
+else
+  echo -e "All canary branches are up-to-date with staging."
+fi
+
+# Returns error if new canary branches are not up to date with staging.
+if [[ -n "$CIRCLE_PULL_REQUEST" ]]; then
+  [[ "$exp_branches_with_master" == "$exp_branches_with_staging" ]]
+fi
