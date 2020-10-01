@@ -23,4 +23,6 @@ jobs:
           ref: master
           fetch-depth: 0
       - name: Run post-release script
-        run: ./bin/post-release patch
+        run: .github/bin/post-release patch
+        env:
+          github_actor: ${{ github.actor }}
