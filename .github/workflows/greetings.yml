@@ -1,3 +1,5 @@
+# This workflow will post a github comment to a pull request or issue
+# when someone posts a first pull request or issue.
 name: Greetings
 
 on: [pull_request, issues]
