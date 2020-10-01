@@ -12,6 +12,9 @@ into an existing project. For now this is achieved manually by copy-pasting code
 4. [Backmerge from master after releases](#backmerge-from-master-after-releases)
 
 ### Greetings
+This [workflow](https://github.com/codenameyau/actions/tree/master/.github/workflows/github/workflows/greetings.yml)
+This workflow will post a github comment to a pull request or issue
+when someone posts a pull request or issue for the first time.
 
 ### Label PR based on files changed
 
