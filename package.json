@@ -2,6 +2,7 @@
   "name": "actions",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "Collection of my github actions",
   "repository": "git@github.com:codenameyau/actions.git",
   "author": "Jorge Yau <codenameyau@gmail.com>",
   "license": "MIT",
