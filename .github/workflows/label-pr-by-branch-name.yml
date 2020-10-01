@@ -1,0 +1,18 @@
+# This workflow will label pull requests automatically based on the branch name.
+#
+# Actions used in this workflow:
+# https://github.com/TimonVS/pr-labeler-action
+#
+
+name: PR Labeler
+on: [pull_request]
+
+jobs:
+  label-pr-by-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: TimonVS/pr-labeler-action@v3
+        with:
+          configuration-path: .github/label-pr-by-branch-name-config.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

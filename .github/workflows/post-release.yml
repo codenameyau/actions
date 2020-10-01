@@ -14,7 +14,7 @@ on:
       - master
 
 jobs:
-  post-deploy-on-master:
+  post-release-on-master:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
     steps:
@@ -22,5 +22,5 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-      - name: Run post-deploy script
-        run: ./bin/post-deploy patch
+      - name: Run post-release script
+        run: ./bin/post-release patch

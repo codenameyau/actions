@@ -1,0 +1,16 @@
+# This workflow will label pull requests based on files changed.
+#
+# Actions used in this workflow:
+# https://github.com/actions/labeler
+#
+
+name: PR Labeler
+on: [pull_request]
+
+jobs:
+  label-pr-by-files-changed:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v2
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"

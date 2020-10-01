@@ -5,9 +5,9 @@
 # - Increment patch version on hotfixes to master.
 #
 # Examples:
-# ./post-deploy patch
-# ./post-deploy minor
-# ./post-deploy major
+# ./post-release patch
+# ./post-release minor
+# ./post-release major
 
 update_branch() {
   git checkout "$1" && git pull origin "$1"
@@ -17,9 +17,9 @@ release_type="${1:-patch}"
 
 if ! [[ $release_type =~ ^('patch'|'minor'|'major')$ ]]; then
   echo 'Available Usage:
-  ./post-deploy patch
-  ./post-deploy minor
-  ./post-deploy major'
+  ./post-release patch
+  ./post-release minor
+  ./post-release major'
   exit 1
 fi
 
