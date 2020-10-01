@@ -4,7 +4,7 @@
 # https://github.com/TimonVS/pr-labeler-action
 #
 
-name: Label PR by branch
+name: PR Labeler
 on: [pull_request]
 
 jobs:
