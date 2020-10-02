@@ -13,8 +13,7 @@ into an existing project. For now this is achieved manually by copy-pasting code
 
 ### Greetings
 [This workflow](https://github.com/codenameyau/actions/blob/master/.github/workflows/greetings.yml)
-will post a github comment to a pull request or issue
-when someone posts a pull request or issue for the first time.
+will post a github comment when someone posts a pull request or issue for the first time.
 
 ### Label PR based on files changed
 

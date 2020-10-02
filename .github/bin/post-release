@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# - Increment major version on breaking changes.
+# - Increment minor version on scheduled releases.
+# - Increment patch version on hotfixes to master.
+#
+# Examples:
+# ./post-release patch
+# ./post-release minor
+# ./post-release major
+
+release_type="${1:-patch}"
+
+if ! [[ $release_type =~ ^('patch'|'minor'|'major')$ ]]; then
+  echo 'Available Usage:
+  ./post-release patch
+  ./post-release minor
+  ./post-release major'
+  exit 1
+fi
+
+# Ensure that your branch is clean.
+if ! git diff --exit-code &>/dev/null ; then
+  echo "Please run this script on a clean branch."
+  exit 1
+fi
+
+# Set config information.
+git config --local pull.rebase false
+git config --local user.email "github-action@github.com"
+git config --local user.name "GitHub Action Bot"
+
+# Fetch the latest changes.
+git fetch
+
+# Merge master into staging for hotfixes and bump version.
+git checkout staging
+git merge master --no-edit
+git push
+
+# Merge staging into edge for warmfixes / hotfixes.
+git checkout edge
+git merge staging --no-edit
+yarn version --new-version "$release_type"
+git push
+
+# Push new tags.
+git push --tags

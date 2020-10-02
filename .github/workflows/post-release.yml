@@ -5,7 +5,7 @@
 # https://github.com/actions/checkout
 #
 
-name: Back-merge after merging PR to master
+name: Backmerge master
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ on:
       - master
 
 jobs:
-  post-release-on-master:
+  post-release:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
     steps:
@@ -23,4 +23,6 @@ jobs:
           ref: master
           fetch-depth: 0
       - name: Run post-release script
-        run: ./bin/post-release patch
+        run: .github/bin/post-release patch
+        # env:
+        #   REMOTE_REPO: https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
