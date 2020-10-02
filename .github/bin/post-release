@@ -26,20 +26,24 @@ if ! git diff --exit-code &>/dev/null ; then
 fi
 
 # Set config information.
-git config pull.rebase false
+git config --local pull.rebase false
+git config --local user.email "github-action@github.com"
+git config --local user.name "GitHub Action Bot"
 
 # Bump the release version.
 yarn version --new-version "$release_type"
 
 # Merge master into staging for hotfixes.
 git checkout staging
+git pull origin staging
 git pull -r origin master
-git push "$REMOTE_REPO" HEAD:staging
+git push origin staging
 
 # Merge staging into edge for warmfixes / hotfixes.
 git checkout edge
+git pull origin edge
 git pull -r origin staging
-git push "$REMOTE_REPO" HEAD:edge
+git push origin edge
 
 # Push new tags.
-git push "$REMOTE_REPO" --tags
+git push --tags
