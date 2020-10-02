@@ -35,14 +35,14 @@ git fetch
 
 # Merge master into staging for hotfixes and bump version.
 git checkout staging
-git merge origin master --no-edit
-yarn version --new-version "$release_type"
-git push origin staging
+git merge master --no-edit
+git push
 
 # Merge staging into edge for warmfixes / hotfixes.
 git checkout edge
-git merge origin staging --no-edit
-git push origin edge
+git merge staging --no-edit
+yarn version --new-version "$release_type"
+git push
 
 # Push new tags.
 git push --tags
