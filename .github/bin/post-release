@@ -9,10 +9,6 @@
 # ./post-release minor
 # ./post-release major
 
-update_branch() {
-  git checkout "$1" && git pull origin "$1"
-}
-
 release_type="${1:-patch}"
 
 if ! [[ $release_type =~ ^('patch'|'minor'|'major')$ ]]; then
@@ -31,23 +27,19 @@ fi
 
 # Set config information.
 git config pull.rebase false
-git config user.name "$github_actor"
-
-# Ensure your local repository is clean and up-to-date.
-update_branch master
-update_branch edge
-update_branch staging
 
 # Bump the release version.
 yarn version --new-version "$release_type"
 
 # Merge master into staging for hotfixes.
 git checkout staging
-git merge origin master --no-edit
-git push origin staging
+git pull -r origin master
+git push "$REMOTE_REPO" HEAD:staging
 
 # Merge staging into edge for warmfixes / hotfixes.
 git checkout edge
-git merge origin staging --no-edit
-git push origin edge
-git push --tags
+git pull -r origin staging
+git push "$REMOTE_REPO" HEAD:edge
+
+# Push new tags.
+git push "$REMOTE_REPO" --tags
