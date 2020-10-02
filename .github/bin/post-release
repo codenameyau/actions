@@ -35,14 +35,14 @@ yarn version --new-version "$release_type"
 
 # Merge master into staging for hotfixes.
 git checkout staging
-git pull origin staging
-git pull -r origin master
+git merge origin staging --no-edit
+git merge origin master --no-edit
 git push origin staging
 
 # Merge staging into edge for warmfixes / hotfixes.
 git checkout edge
-git pull origin edge
-git pull -r origin staging
+git merge origin edge --no-edit
+git merge origin staging --no-edit
 git push origin edge
 
 # Push new tags.
