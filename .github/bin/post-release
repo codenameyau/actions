@@ -30,18 +30,17 @@ git config --local pull.rebase false
 git config --local user.email "github-action@github.com"
 git config --local user.name "GitHub Action Bot"
 
-# Bump the release version.
-yarn version --new-version "$release_type"
+# Fetch the latest changes.
+git fetch
 
-# Merge master into staging for hotfixes.
+# Merge master into staging for hotfixes and bump version.
 git checkout staging
-git merge origin staging --no-edit
 git merge origin master --no-edit
+yarn version --new-version "$release_type"
 git push origin staging
 
 # Merge staging into edge for warmfixes / hotfixes.
 git checkout edge
-git merge origin edge --no-edit
 git merge origin staging --no-edit
 git push origin edge
 
