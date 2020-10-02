@@ -14,7 +14,7 @@ on:
       - master
 
 jobs:
-  post-release-on-master:
+  post-release:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged
     steps:
@@ -24,5 +24,5 @@ jobs:
           fetch-depth: 0
       - name: Run post-release script
         run: .github/bin/post-release patch
-        env:
-          REMOTE_REPO: https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        # env:
+        #   REMOTE_REPO: https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
