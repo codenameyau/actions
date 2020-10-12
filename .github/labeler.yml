@@ -1,2 +1,2 @@
 dependencies:
-  - all: ['package.json', 'yarn.lock']
+  - all: ['*package.json*', '*yarn.lock*']
