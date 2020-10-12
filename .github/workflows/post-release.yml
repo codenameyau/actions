@@ -5,7 +5,7 @@
 # https://github.com/actions/checkout
 #
 
-name: Post-release
+name: Post Release
 
 on:
   pull_request:
@@ -36,7 +36,7 @@ jobs:
           tag_name: ${{ steps.previous_tag.outputs.tag }}
           release_name: ${{ steps.previous_tag.outputs.tag }}
           body: |
-            This is an automated release by GitHub actions.
+            This is an automated release created by GitHub actions.
           draft: false
           prerelease: false
 
