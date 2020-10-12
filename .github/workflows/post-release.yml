@@ -5,7 +5,7 @@
 # https://github.com/actions/checkout
 #
 
-name: Backmerge master
+name: Post-release
 
 on:
   pull_request:
