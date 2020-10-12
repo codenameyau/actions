@@ -30,4 +30,4 @@ will label a PR with labels defined inside `.github/label-by-branch-name.yml`.
 [This workflow](https://github.com/codenameyau/actions/blob/master/.github/workflows/post-release.yml)
 will perform a back-merge from `master` to `staging` to `edge`
 when a pull request to master is merged in. It will also create
-a release on GitHub for the current tag.
+a release on GitHub for the latest tag and then create a new tag.
