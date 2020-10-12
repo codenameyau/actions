@@ -1,3 +1,2 @@
 dependencies:
-  - package.json
-  - yarn.lock
+  - 'yarn.lock'
