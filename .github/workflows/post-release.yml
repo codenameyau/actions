@@ -5,7 +5,7 @@
 # https://github.com/actions/checkout
 #
 
-name: Backmerge master
+name: Post-release
 
 on:
   pull_request:
@@ -22,9 +22,11 @@ jobs:
         with:
           ref: master
           fetch-depth: 0
-      - name: 'Get Previous tag'
+
+      - name: Get Previous tag
         id: previous_tag
-        uses: "WyriHaximus/github-action-get-previous-tag@master"
+        uses: WyriHaximus/github-action-get-previous-tag@master
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -34,8 +36,9 @@ jobs:
           tag_name: ${{ steps.previous_tag.outputs.tag }}
           release_name: ${{ steps.previous_tag.outputs.tag }}
           body: |
-            This is an automated release created by GitHub actions.
+            This is an automated release by GitHub actions.
           draft: false
           prerelease: false
+
       - name: Run post-release script
         run: .github/bin/post-release patch
