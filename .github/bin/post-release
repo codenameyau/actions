@@ -27,8 +27,8 @@ fi
 
 # Set config information.
 git config --local pull.rebase false
-git config --local user.email "github-action@github.com"
-git config --local user.name "GitHub Action Bot"
+git config --local user.email "codenameyau@gmail.com"
+git config --local user.name "Jorge Yau"
 
 # Fetch the latest changes.
 git fetch
